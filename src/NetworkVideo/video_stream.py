@@ -3,7 +3,7 @@
 server_ip = "192.168.137.1" #TO EDIT
 
 # import the necessary packages
-import pyrealsense2 as rs
+import pyrealsense2.pyrealsense2 as rs
 import imagezmq
 import numpy as np
 from cv2 import IMWRITE_JPEG_QUALITY, imencode
