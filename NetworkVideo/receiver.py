@@ -22,3 +22,16 @@ while True:
     cv2.imshow("RS", frame)
     cv2.waitKey(1)
     i += 1
+
+
+"""
+Without compression:
+
+Network: ~220 MBps
+Jetson CPU: 62% (!)
+
+With compression:
+
+Network: 14.4 Mbps
+Jetson CPU: 77%
+"""
