@@ -1,0 +1,24 @@
+Re-configuration du Jetson:
+ - Installer la bonne version de Jetpack, avec SDK Manager
+ - Comme NVIDIA sont relous et font genre 1 version seulement qui marche, utiliser la version docker
+ - Une fois qu'elle est installée, exécuter le manager avec la commande qui suit (peut-être à update si ya des nouvelles versions du soft):
+
+        sudo docker run -it --network host --privileged -v /dev/bus/usb:/dev/bus/usb --rm sdkmanager --cli install  --logintype devzone --product Jetson --host --targetos Linux --version 4.6.3 --target JETSON_NANO_TARGETS --additionalsdk 'DeepStream 6.0.1' --select 'Jetson OS' --select 'Jetson SDK Components' --flash all --staylogin true
+
+- Configurer l'interface réseau du Jetson:
+    - Modifier le fichier /etc/network/interfaces, changer la ligne ".../interfaces.d" par ".../interfaces.d/*"
+    - Dans le dossier interfaces.d, ajouter un fichier (n'importe quel nom) avec le contenu suivant:
+        iface eth0 inet static
+            address 192.168.137.2
+            netmask 255.255.255.0
+            gateway 192.168.137.1
+
+- Configurer le réseau de l'ordi:
+    - Sur Windows, voir le PDF précédent
+    - Sur Linux:
+        Créer une nouvelle connection filaire dans le GUI, ne pas oublier de l'activer
+        Dans le menu IPv4, changer l'option "Method" en "Share with other computers" - Ceci change l'IP de l'ordi en qqch du genre 10.14.*.*
+        Pour repasser à 192.168.137.1, exécuter la commande:
+            nmcli connection modify $CONNECTION_ID +ipv4.addresses 192.168.137.1/24
+
+        where $CONNECTION_ID is found via nmcli connection show
